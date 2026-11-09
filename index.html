@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>취업 고민 처방전 | 다채로운 직업상담사 한나쌤</title>
+<meta name="description" content="지금 가장 걸리는 취업 고민을 고르면, 맞춤 처방과 오늘의 실천 목록을 드려요.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --bg:#E8F1EC;
+    --bg-dot:#D3E4DA;
+    --paper:#FFFFFF;
+    --paper-warm:#FBFDFB;
+    --ink:#1E2F2A;
+    --ink-soft:#56685F;
+    --muted:#8A9A92;
+    --teal:#2F7A64;
+    --teal-dark:#215A49;
+    --teal-tint:#E3F1EB;
+    --teal-line:#BFDCCF;
+    --line:#D9E5DE;
+    --stamp:#D2553F;
+    --sun:#F4C95D;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(30,47,42,.05), 0 6px 18px rgba(30,47,42,.06);
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(var(--bg-dot) 1px, transparent 1.2px) 0 0/22px 22px,
+      var(--bg);
+    color:var(--ink);
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR','NanumGothic',sans-serif;
+    line-height:1.6;
+    min-height:100vh;
+    word-break:keep-all;
+    overflow-wrap:anywhere;
+  }
+  button,input{font-family:inherit;}
+  .wrap{max-width:1160px;margin:0 auto;padding:32px 22px 40px;}
+
+  /* ---------- Header (약봉투 느낌) ---------- */
+  header{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    margin-bottom:26px;
+  }
+  .hd-strip{
+    background:var(--teal);
+    color:#fff;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.08em;
+    padding:7px 22px;
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+  }
+  .hd-strip .cross{display:inline-flex;align-items:center;gap:7px;}
+  .hd-strip .cross svg{flex:0 0 auto;}
+  .hd-main{
+    display:flex;align-items:center;gap:20px;
+    padding:22px 24px 22px;
+  }
+  .hd-icon{
+    flex:0 0 auto;width:68px;height:68px;border-radius:18px;
+    background:var(--teal-tint);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hd-main h1{
+    margin:0 0 4px;font-size:30px;font-weight:800;letter-spacing:-.02em;color:var(--ink);
+  }
+  .hd-main h1 em{font-style:normal;color:var(--teal);}
+  .hd-main p{margin:0;color:var(--ink-soft);font-size:15px;}
+
+  /* ---------- Layout ---------- */
+  .layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:26px;align-items:start;}
+
+  .step{
+    display:flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.04em;margin-bottom:6px;
+  }
+  .step b{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:12px;
+  }
+  h2.intro{font-size:20px;font-weight:700;margin:0 0 16px;letter-spacing:-.01em;}
+
+  /* ---------- 고민 카드 (약 라벨) ---------- */
+  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:16px;}
+  .card{
+    position:relative;
+    display:flex;align-items:center;gap:12px;
+    width:100%;text-align:left;
+    background:var(--paper);
+    border:1.5px solid transparent;
+    border-radius:var(--radius);
+    padding:14px 14px 14px 12px;
+    cursor:pointer;
+    box-shadow:var(--shadow);
+    color:var(--ink);
+    font-size:inherit;
+    transition:border-color .18s ease, transform .15s ease, background .18s ease;
+  }
+  .card:hover{border-color:var(--teal-line);transform:translateY(-1px);}
+  .card:focus-visible{outline:3px solid var(--sun);outline-offset:2px;}
+  .card.active{border-color:var(--teal);background:var(--teal-tint);}
+  .card .icon{
+    flex:0 0 auto;width:44px;height:44px;border-radius:12px;
+    background:var(--teal-tint);color:var(--teal);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .card.active .icon{background:var(--teal);color:#fff;}
+  .card .meta{flex:1;min-width:0;}
+  .card .no{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;
+    color:var(--teal);margin-bottom:2px;
+  }
+  .card .name{display:block;font-weight:700;font-size:15px;line-height:1.4;}
+  .card .badge{
+    position:absolute;top:10px;right:10px;
+    font-size:11px;font-weight:700;color:#5A4300;background:var(--sun);
+    border-radius:999px;padding:1px 9px;display:none;
+  }
+  .card.has-items .badge{display:inline-block;}
+  .card.has-items .name{padding-right:58px;}
+
+  /* ---------- 처방 상세 ---------- */
+  .detail{
+    display:none;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .detail.show{display:block;animation:fadeSlide .3s ease;}
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}
+  .detail .d-head{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:18px 22px 14px;border-bottom:1px dashed var(--line);
+  }
+  .pill-tag{
+    display:inline-flex;align-items:center;
+    font-size:12px;font-weight:700;letter-spacing:.05em;border-radius:999px;overflow:hidden;
+    border:1.5px solid var(--teal);
+  }
+  .pill-tag span{padding:2px 10px;}
+  .pill-tag span:first-child{background:var(--teal);color:#fff;}
+  .pill-tag span:last-child{color:var(--teal);}
+  .detail h3{margin:0;font-size:20px;font-weight:800;letter-spacing:-.01em;flex-basis:100%;}
+  .detail .d-body{padding:18px 22px 22px;}
+  .sub-label{font-size:13px;font-weight:700;color:var(--teal-dark);margin:0 0 8px;display:flex;align-items:center;gap:6px;}
+  .direction{
+    margin:0 0 20px;padding:14px 16px;
+    background:var(--teal-tint);border-radius:10px;
+    color:var(--ink);font-size:15px;line-height:1.7;
+  }
+  .hint{font-weight:500;color:var(--muted);font-size:12.5px;}
+
+  .checklist{list-style:none;margin:0 0 14px;padding:0;}
+  .checklist li{margin:0;padding:0;border-bottom:1px dashed var(--line);}
+  .checklist li:last-child{border-bottom:none;}
+  .checklist button.item{
+    display:flex;align-items:flex-start;gap:11px;width:100%;
+    background:none;border:none;text-align:left;cursor:pointer;
+    padding:11px 4px;font-size:15px;color:var(--ink);line-height:1.5;
+    border-radius:8px;
+  }
+  .checklist button.item:hover{background:#F4F9F6;}
+  .checklist button.item:focus-visible{outline:3px solid var(--sun);outline-offset:1px;}
+  .checklist .chk{
+    flex:0 0 auto;width:20px;height:20px;margin-top:1px;
+    border:2px solid var(--teal-line);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .15s ease;background:#fff;
+  }
+  .checklist li.added .chk{background:var(--teal);border-color:var(--teal);}
+  .checklist li.added .chk::after{content:"";width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px);}
+  .checklist li.added .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--teal-line);}
+  .checklist .mine{
+    flex:0 0 auto;font-size:11px;font-weight:700;color:var(--teal);background:var(--teal-tint);
+    border-radius:999px;padding:1px 8px;margin-top:2px;
+  }
+
+  .custom-add{display:flex;gap:8px;margin-top:6px;}
+  .custom-add input{
+    flex:1;min-width:0;border:1.5px solid var(--line);border-radius:10px;
+    padding:11px 13px;font-size:15px;background:#fff;color:var(--ink);
+  }
+  .custom-add input:focus{outline:none;border-color:var(--teal);}
+  .custom-add button{
+    flex:0 0 auto;border:none;background:var(--teal);color:#fff;border-radius:10px;
+    padding:0 18px;font-size:14px;font-weight:700;cursor:pointer;
+  }
+  .custom-add button:hover{background:var(--teal-dark);}
+
+  /* ---------- 나의 처방전 (영수증 종이) ---------- */
+  .plan-panel{position:sticky;top:20px;}
+  .rx{
+    position:relative;
+    background:var(--paper-warm);
+    border-radius:var(--radius) var(--radius) 0 0;
+    box-shadow:var(--shadow);
+    padding:22px 22px 18px;
+  }
+  .rx::after{ /* 지그재그 하단 */
+    content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px;
+    background:
+      linear-gradient(135deg, var(--paper-warm) 7px, transparent 0) 0 0/14px 10px repeat-x,
+      linear-gradient(-135deg, var(--paper-warm) 7px, transparent 0) 0 0/14px 10px repeat-x;
+  }
+  .rx-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .rx-top h2{margin:0;font-size:21px;font-weight:800;letter-spacing:-.01em;}
+  .rx-top .sub{margin:2px 0 0;font-size:13px;color:var(--ink-soft);}
+  .stamp{
+    flex:0 0 auto;width:66px;height:66px;border-radius:50%;
+    border:2px solid var(--stamp);color:var(--stamp);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transform:rotate(-12deg);opacity:.85;line-height:1.15;text-align:center;
+    box-shadow:inset 0 0 0 3px #fff, inset 0 0 0 4px rgba(210,85,63,.55);
+  }
+  .stamp small{font-size:9.5px;font-weight:600;letter-spacing:.04em;}
+  .stamp b{font-size:14px;font-weight:800;}
+  .rx-info{
+    display:grid;grid-template-columns:auto 1fr;gap:4px 12px;
+    margin:16px 0 14px;padding:10px 0;border-top:1.5px solid var(--ink);border-bottom:1px solid var(--line);
+    font-size:13px;
+  }
+  .rx-info dt{color:var(--muted);font-weight:600;}
+  .rx-info dd{margin:0;color:var(--ink);font-weight:600;}
+  .plan-empty{
+    font-size:14px;color:var(--ink-soft);text-align:center;
+    border:1.5px dashed var(--teal-line);border-radius:10px;padding:22px 14px;background:#fff;
+  }
+  .plan-group{margin-bottom:14px;}
+  .plan-group .g-title{
+    display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;margin-bottom:4px;
+  }
+  .plan-group .g-no{
+    font-size:11px;font-weight:700;color:#fff;background:var(--teal);border-radius:999px;padding:1px 8px;
+  }
+  .plan-item{
+    display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--ink);padding:5px 0 5px 2px;
+  }
+  .plan-item .box{
+    flex:0 0 auto;width:14px;height:14px;margin-top:4px;border:1.5px solid var(--ink-soft);border-radius:3px;
+  }
+  .plan-item .t{flex:1;}
+  .plan-item .remove{
+    flex:0 0 auto;border:none;background:none;cursor:pointer;color:var(--muted);
+    font-size:16px;line-height:1;padding:2px 4px;border-radius:6px;
+  }
+  .plan-item .remove:hover{color:var(--stamp);background:#FBEDEA;}
+  .rx-brand{display:none;}
+  .rx-foot{margin-top:14px;padding-top:10px;border-top:1px dashed var(--line);font-size:12px;color:var(--muted);}
+  .plan-actions{display:flex;gap:8px;margin-top:22px;}
+  .plan-actions button{
+    flex:1;font-size:14px;font-weight:700;border-radius:10px;padding:12px 8px;cursor:pointer;
+  }
+  #printBtn{background:var(--teal);color:#fff;border:1.5px solid var(--teal);}
+  #printBtn:hover{background:var(--teal-dark);}
+  #resetBtn{background:#fff;color:var(--ink-soft);border:1.5px solid var(--line);}
+  #resetBtn:hover{border-color:var(--stamp);color:var(--stamp);}
+
+  footer{
+    max-width:1160px;margin:0 auto;padding:10px 22px 36px;text-align:center;
+    font-size:12px;color:var(--muted);
+  }
+  footer a{color:var(--ink-soft);text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .layout{grid-template-columns:minmax(0,1fr);}
+    .plan-panel{position:static;}
+  }
+  @media (max-width:560px){
+    .wrap{padding:16px 14px 28px;}
+    .hd-strip{padding:6px 16px;font-size:11.5px;}
+    .hd-strip .r{font-size:11px;}
+    .hd-main{padding:18px 16px;gap:14px;align-items:flex-start;}
+    .hd-icon{width:52px;height:52px;border-radius:14px;}
+    .hd-icon svg{width:30px;height:30px;}
+    .hd-main h1{font-size:24px;}
+    .hd-main p{font-size:14px;}
+    .cards{grid-template-columns:minmax(0,1fr);gap:10px;}
+    .card{padding:12px;}
+    .card .icon{width:40px;height:40px;}
+    h2.intro{font-size:18px;}
+    .detail .d-head,.detail .d-body{padding-left:16px;padding-right:16px;}
+    .rx{padding:18px 16px 16px;}
+  }
+
+
+  /* ---------- 인쇄용 처방전 문서 ---------- */
+  #printDoc{display:none;}
+  @media print{
+    @page{size:A4;margin:12mm 13mm;}
+    html,body{background:#fff !important;}
+    .wrap,footer{display:none !important;}
+    #printDoc{display:flex !important;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+  .pd{display:flex;flex-direction:column;min-height:271mm;font-size:12.5px;line-height:1.55;color:#111;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','NanumGothic',sans-serif;}
+  .pd-top{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;border-bottom:2.5px solid #111;padding-bottom:9px;}
+  .pd-kicker{font-size:10px;font-weight:700;letter-spacing:.14em;color:#2F7A64;margin-bottom:2px;}
+  .pd-kicker .x{display:inline-block;width:10px;height:10px;vertical-align:-1px;margin-right:5px;
+    background:linear-gradient(#2F7A64,#2F7A64) center/3.4px 100% no-repeat,linear-gradient(#2F7A64,#2F7A64) center/100% 3.4px no-repeat;}
+  .pd-title{font-size:29px;font-weight:800;letter-spacing:-.02em;margin:0;line-height:1.2;}
+  .pd-meta{display:grid;grid-template-columns:auto 130px;gap:5px 8px;font-size:11.5px;align-items:end;}
+  .pd-meta dt{font-weight:700;color:#444;}
+  .pd-meta dd{margin:0;border-bottom:1px solid #555;min-height:17px;padding-left:4px;font-weight:600;}
+  .pd-intro{margin:9px 0 12px;font-size:11.5px;color:#555;}
+  .pd-sec{border:1.2px solid #333;border-radius:6px;margin-bottom:11px;break-inside:avoid;overflow:hidden;}
+  .pd-sec-h{display:flex;align-items:center;gap:8px;padding:7px 12px;background:#EEF4F1;border-bottom:1px solid #333;}
+  .pd-no{font-size:10px;font-weight:800;border:1.2px solid #111;border-radius:999px;padding:0 7px;background:#fff;}
+  .pd-dx{font-size:10px;font-weight:700;color:#555;}
+  .pd-name{font-size:14.5px;font-weight:800;}
+  .pd-rx{padding:8px 12px 3px;font-size:12px;}
+  .pd-rx b{display:inline-block;min-width:40px;font-size:10px;color:#2F7A64;letter-spacing:.04em;}
+  .pd-items{width:100%;border-collapse:collapse;margin:2px 0 4px;}
+  .pd-items td{padding:7px 12px;border-top:1px dashed #BBB;vertical-align:bottom;}
+  .pd-items tr:first-child td{border-top:none;}
+  .pd-items .bx{width:22px;padding-right:0;font-size:14px;line-height:1;}
+  .pd-items .due{width:170px;white-space:nowrap;font-size:10.5px;color:#444;}
+  .pd-items .due span{display:inline-block;width:104px;border-bottom:1px solid #666;margin-left:4px;height:12px;}
+  .pd-week-box{margin-top:3px;break-inside:avoid;}
+  .pd-bottom{display:grid;grid-template-columns:1fr 1.3fr;gap:10px;margin-top:10px;flex:1;min-height:150px;break-inside:avoid;}
+  .pd-bottom .pd-box{display:flex;flex-direction:column;}
+  .pd-box{border:1.2px solid #333;border-radius:6px;padding:10px 12px;}
+  .pd-box h4{margin:0 0 8px;font-size:13px;font-weight:800;}
+  .pd-box h4 small{font-weight:500;color:#555;font-size:9.5px;margin-left:4px;}
+  .pd-week{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed;}
+  .pd-week th,.pd-week td{border:1px solid #777;text-align:center;padding:3px 0;}
+  .pd-week th{background:#EEF4F1;font-weight:700;}
+  .pd-week th:first-child,.pd-week td:first-child{width:46%;text-align:left;padding-left:5px;}
+  .pd-week td:first-child{height:27px;line-height:1.3;}
+  .pd-week td.c::before{content:"☐";font-size:14px;}
+  .pd-line{display:flex;gap:6px;align-items:flex-end;font-size:12.5px;font-weight:700;margin-bottom:12px;}
+  .pd-sub{font-size:13px;font-weight:800;margin:6px 0 4px;}
+  .pd-line span{flex:1;border-bottom:1px solid #555;height:16px;}
+  .pd-memo{flex:1;min-height:66px;background:repeating-linear-gradient(#fff 0 25px,#BBB 25px 26px);}
+  .pd-end{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:7px;border-top:1px solid #333;font-size:10.5px;color:#444;}
+  .pd-stamp{width:62px;height:62px;border-radius:50%;border:2px solid #C24A36;color:#C24A36;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transform:rotate(-12deg);line-height:1.15;box-shadow:inset 0 0 0 3px #fff,inset 0 0 0 4px #C24A36;flex:0 0 auto;}
+  .pd-stamp small{font-size:9px;font-weight:700;}
+  .pd-stamp b{font-size:13px;font-weight:800;}
+  .pd.compact{font-size:11.5px;line-height:1.45;}
+  .pd.compact .pd-intro{margin:6px 0 8px;}
+  .pd.compact .pd-sec{margin-bottom:7px;}
+  .pd.compact .pd-sec-h{padding:4px 10px;}
+  .pd.compact .pd-rx{padding:4px 10px 1px;font-size:11px;}
+  .pd.compact .pd-items td{padding:3px 10px;}
+  .pd.compact .pd-week td:first-child{height:21px;}
+  .pd.compact .pd-bottom{min-height:110px;margin-top:7px;}
+  .pd.compact .pd-memo{min-height:44px;}
+  .pd-empty{border:1.2px dashed #777;border-radius:6px;padding:14px;text-align:center;color:#555;margin-bottom:9px;}
+.hd-strip a.blog-link{color:#fff;text-decoration:none;font-weight:700;border-bottom:1px solid rgba(255,255,255,.6)}
+.hd-strip a.blog-link:hover{border-bottom-color:#fff}
+footer .ft-notice{margin-bottom:4px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="hd-strip">
+      <span class="cross">
+        <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M5 0h4v5h5v4H9v5H5V9H0V5h5z" fill="#fff"/></svg>
+        한나쌤 취업상담실
+      </span>
+      <a class="r blog-link" href="https://colorfulcareercounselor.tistory.com" target="_blank" rel="noopener">한나쌤 블로그 바로가기 →</a>
+    </div>
+    <div class="hd-main">
+      <div class="hd-icon" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <g transform="rotate(-35 18 18)">
+            <rect x="5" y="11.5" width="26" height="13" rx="6.5" fill="#fff" stroke="#2F7A64" stroke-width="2"/>
+            <path d="M18 11.5h6.5a6.5 6.5 0 0 1 0 13H18z" fill="#2F7A64"/>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <h1>취업 고민 <em>처방전</em></h1>
+        <p>지금 가장 걸리는 고민을 고르면, 맞춤 처방과 오늘의 실천 목록을 드려요.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div class="left">
+      <div class="step"><b>1</b> 고민 고르기</div>
+      <h2 class="intro">지금 가장 마음에 걸리는 부분을 눌러보세요</h2>
+      <div class="cards" id="cards"></div>
+      <div class="detail" id="detail" aria-live="polite"></div>
+    </div>
+
+    <aside class="plan-panel">
+      <div class="rx" id="rx">
+        <div class="rx-top">
+          <div>
+            <h2>나의 처방전</h2>
+            <p class="sub">고른 실천 항목이 순서대로 담겨요</p>
+          </div>
+          <div class="stamp" aria-label="처방 한나쌤"><small>처방</small><b>한나쌤</b></div>
+        </div>
+        <dl class="rx-info">
+          <dt>발행일</dt><dd id="rxDate"></dd>
+          <dt>처방 항목</dt><dd id="rxCount">0개</dd>
+        </dl>
+        <div id="planBody"></div>
+        <div class="rx-foot">하루 한 가지씩, 체크하며 꾸준히 실천해 보세요.<span class="rx-brand"> · 다채로운 직업상담사 한나쌤 colorfulcareercounselor.tistory.com</span></div>
+      </div>
+      <div class="plan-actions">
+        <button id="printBtn" type="button">인쇄 / 저장</button>
+        <button id="resetBtn" type="button">처방전 초기화</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div id="printDoc" class="pd" aria-hidden="true"></div>
+
+<footer>
+  <div class="ft-notice">© 다채로운 직업상담사 한나쌤 · 개인 학습용 · 무단 재배포 및 상업적 이용 금지</div>
+  <div>더 많은 취업·진로 이야기는 <a href="https://colorfulcareercounselor.tistory.com" target="_blank" rel="noopener">colorfulcareercounselor.tistory.com</a> 에서 만나보세요</div>
+</footer>
+
+<script>
+const ICONS = {
+  target: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>`,
+  resume: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h9l4 4v16H6z"/><path d="M15 2v4h4"/><path d="M9 12h7M9 16h7M9 8h3"/></svg>`,
+  interview: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h13a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H10l-4 4v-4H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg>`,
+  competency: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.5 5.5L20 8.5l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-1z"/></svg>`,
+  info: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></svg>`,
+  motivation: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.6-9.3-9C1.2 8.7 2.6 5 6.2 5c2 0 3.4 1.2 4.3 2.4L12 9l1.5-1.6C14.4 6.2 15.8 5 17.8 5c3.6 0 5 3.7 3.5 7-2.3 4.4-9.3 9-9.3 9z"/></svg>`,
+  execution: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>`
+};
+
+const CATEGORIES = [
+  {
+    id: 'target',
+    summary: '나를 먼저 이해하고, 검사와 리서치로 직무 후보를 좁혀가요.',
+    name: '목표 직무가 불명확해요',
+    direction: '직무 방향이 흔들리면 이력서도 자소서도 면접도 같이 흔들려요. 순서를 바꿔보세요 — 나를 먼저 이해하고, 그다음 시장을 탐색하는 거예요. 검사와 리서치로 후보군을 좁혀가면 방향이 자연히 선명해집니다.',
+    items: [
+      '고용24 직업심리검사(직업선호도검사 등) 실시하기',
+      '지금까지 경험 중 몰입했던 순간 3가지 적어보기',
+      '관심 직무 3개 추리고 필요 역량 조사하기',
+      '관심 직무 종사자 인터뷰나 후기 찾아보기'
+    ]
+  },
+  {
+    id: 'resume',
+    summary: '채용공고 요건을 먼저 분석하고, 내 경험을 거꾸로 맞춰 채워요.',
+    name: '이력서·자기소개서가 막막해요',
+    direction: '백지에서 시작하지 마세요. 채용공고의 자격요건을 먼저 분석하고, 내 경험을 거기에 맞춰 역으로 매칭하면 훨씬 수월해집니다. 완벽한 초안보다 일단 채워보는 것이 먼저예요.',
+    items: [
+      '지원 직무 채용공고 3개 분석해서 공통 키워드 뽑기',
+      '경험을 상황-과제-행동-결과 순서로 정리해보기',
+      '자소서 문항별 핵심 메시지 한 줄로 먼저 정하기',
+      '완성 후 제3자에게 피드백 받기'
+    ]
+  },
+  {
+    id: 'interview',
+    summary: '예상 질문을 뽑아 소리 내어 연습하면 불안이 줄어요.',
+    name: '면접이 두렵고 준비가 안 됐어요',
+    direction: '면접 불안은 대부분 "무엇이 나올지 모른다"는 데서 옵니다. 예상 질문을 미리 뽑아 답변을 소리 내어 연습하는 것만으로 불안이 크게 줄어들어요.',
+    items: [
+      '지원 직무 예상 질문 10개 뽑아보기',
+      '답변을 텍스트가 아닌 말로 3회 이상 연습하기',
+      '모의면접(상담사·지인) 1회 이상 진행하기',
+      '면접 복장·이동 동선 미리 점검하기'
+    ]
+  },
+  {
+    id: 'competency',
+    summary: '필수와 우대를 구분하고, 필수 역량부터 하나씩 채워요.',
+    name: '직무 역량(자격증, 경험)이 부족해요',
+    direction: '모든 역량을 다 채울 필요는 없어요. 채용공고에서 "필수"와 "우대"를 구분하고, 필수부터 우선순위를 정해 하나씩 채워가면 됩니다.',
+    items: [
+      '목표 직무의 필수/우대 요건 구분해서 정리하기',
+      '단기간(1~3개월)에 취득 가능한 자격증·교육 찾아보기',
+      '인턴·프로젝트·봉사 등 실무 경험 기회 알아보기',
+      '부족한 역량을 보완할 대체 경험 정리하기'
+    ]
+  },
+  {
+    id: 'info',
+    summary: '채널을 3~4개로 좁히고, 정해진 요일에 확인하는 루틴을 만들어요.',
+    name: '채용 정보를 어디서 찾을지 모르겠어요',
+    direction: '정보가 없는 게 아니라 정리가 안 된 경우가 많아요. 채널을 3~4개로 좁히고 주기적으로 확인하는 루틴을 만들면 놓치는 공고가 줄어듭니다.',
+    items: [
+      '고용24·사람인·잡코리아 등 주요 채용 채널 3개 선정하기',
+      '관심 기업·기관 채용 페이지 즐겨찾기 해두기',
+      '주 1~2회 채용정보 확인하는 요일 정하기',
+      '관심 분야 채용 공고 알림 설정하기'
+    ]
+  },
+  {
+    id: 'motivation',
+    summary: '작더라도 끝낼 수 있는 일 하나로 작은 완료를 쌓아요.',
+    name: '동기부여가 안 되고 자신감이 없어요',
+    direction: '자신감은 큰 성취가 아니라 작은 완료의 누적에서 생겨요. 하루 한 가지, 작더라도 끝낼 수 있는 일부터 시작해보세요.',
+    items: [
+      '오늘 완료할 아주 작은 목표 1개 정하기',
+      '지금까지 이룬 작은 성취 5가지 적어보기',
+      '취업 준비 외에 나를 회복시키는 활동 하나 정하기',
+      '진행 상황을 확인해줄 사람(상담사·지인) 정하기'
+    ]
+  },
+  {
+    id: 'execution',
+    summary: '목표를 하루·주 단위로 쪼개고, 눈에 보이는 곳에 기록해요.',
+    name: '계획을 세워도 실천이 잘 안 돼요',
+    direction: '계획이 실패하는 이유는 대부분 목표가 너무 크기 때문이에요. 하루·주 단위로 쪼개고, 눈에 보이는 곳에 기록하면 실행력이 올라갑니다.',
+    items: [
+      '이번 주 목표 3가지만 정하기 (너무 많이 X)',
+      '매일 체크할 수 있는 곳(다이어리·앱)에 기록하기',
+      '계획 점검하는 요일·시간 고정하기',
+      '실천 못 했을 때 다시 시작하는 나만의 규칙 정하기'
+    ]
+  }
+];
+
+// plan state: { [catId]: [ { text, custom } ] }
+const state = {};
+let activeId = null;
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rxNo = cat => '처방 ' + String(CATEGORIES.indexOf(cat) + 1).padStart(2, '0');
+
+function renderCards(){
+  const wrap = document.getElementById('cards');
+  wrap.innerHTML = CATEGORIES.map(cat => {
+    const n = (state[cat.id] || []).length;
+    return `
+    <button type="button" class="card ${activeId===cat.id?'active':''} ${n?'has-items':''}" data-id="${cat.id}" aria-pressed="${activeId===cat.id}">
+      <span class="badge">${n ? n + '개 담김' : ''}</span>
+      <span class="icon">${ICONS[cat.id]}</span>
+      <span class="meta">
+        <span class="no">${rxNo(cat)}</span>
+        <span class="name">${esc(cat.name)}</span>
+      </span>
+    </button>`;
+  }).join('');
+  wrap.querySelectorAll('.card').forEach(el => {
+    el.addEventListener('click', () => selectCategory(el.dataset.id));
+  });
+}
+
+function selectCategory(id){
+  activeId = id;
+  renderCards();
+  renderDetail(CATEGORIES.find(c => c.id === id));
+}
+
+function isAdded(catId, text){
+  return (state[catId] || []).some(i => i.text === text);
+}
+
+function toggleItem(catId, text, custom){
+  if(!state[catId]) state[catId] = [];
+  const idx = state[catId].findIndex(i => i.text === text);
+  if(idx > -1) state[catId].splice(idx, 1);
+  else state[catId].push({ text, custom: !!custom });
+  if(state[catId].length === 0) delete state[catId];
+}
+
+function renderDetail(cat){
+  const detail = document.getElementById('detail');
+  detail.classList.add('show');
+  detail.innerHTML = `
+    <div class="d-head">
+      <span class="pill-tag"><span>${rxNo(cat)}</span><span>맞춤 처방</span></span>
+      <h3>${esc(cat.name)}</h3>
+    </div>
+    <div class="d-body">
+      <p class="sub-label">💊 처방 내용</p>
+      <p class="direction">${esc(cat.direction)}</p>
+      <p class="sub-label">📋 복용법 · 실천 목록 <span class="hint">눌러서 처방전에 담기</span></p>
+      <ul class="checklist" id="checklist"></ul>
+      <div class="custom-add">
+        <input type="text" id="customInput" placeholder="나만의 실천 항목 적기 (예: 기업 정보 조사)" aria-label="나만의 실천 항목">
+        <button type="button" id="customAddBtn">담기</button>
+      </div>
+    </div>
+  `;
+
+  const list = document.getElementById('checklist');
+  function drawList(){
+    const custom = (state[cat.id] || []).filter(i => i.custom);
+    const all = [...cat.items.map(t => ({ text: t, custom: false })), ...custom];
+    list.innerHTML = all.map(i => `
+      <li class="${isAdded(cat.id, i.text) ? 'added' : ''}">
+        <button type="button" class="item" data-text="${esc(i.text)}" data-custom="${i.custom}" aria-pressed="${isAdded(cat.id, i.text)}">
+          <span class="chk" aria-hidden="true"></span><span class="txt">${esc(i.text)}</span>${i.custom ? '<span class="mine">내 항목</span>' : ''}
+        </button>
+      </li>`).join('');
+    list.querySelectorAll('button.item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleItem(cat.id, btn.dataset.text, btn.dataset.custom === 'true');
+        drawList(); renderCards(); renderPlan();
+      });
+    });
+  }
+  drawList();
+
+  const input = document.getElementById('customInput');
+  function addCustom(){
+    const val = input.value.trim();
+    if(!val) return;
+    if(!isAdded(cat.id, val)) toggleItem(cat.id, val, true);
+    input.value = '';
+    drawList(); renderCards(); renderPlan();
+  }
+  document.getElementById('customAddBtn').addEventListener('click', addCustom);
+  input.addEventListener('keydown', e => { if(e.key === 'Enter' && !e.isComposing) addCustom(); });
+}
+
+function renderPlan(){
+  const body = document.getElementById('planBody');
+  const activeCats = CATEGORIES.filter(c => state[c.id] && state[c.id].length);
+  const total = activeCats.reduce((s, c) => s + state[c.id].length, 0);
+  document.getElementById('rxCount').textContent = total + '개';
+  renderPrintDoc();
+
+  if(activeCats.length === 0){
+    body.innerHTML = `<div class="plan-empty">아직 담긴 처방이 없어요.<br>고민을 골라 실천 항목을 눌러보세요.</div>`;
+    return;
+  }
+  body.innerHTML = activeCats.map(cat => `
+    <div class="plan-group">
+      <div class="g-title"><span class="g-no">${rxNo(cat)}</span>${esc(cat.name)}</div>
+      ${state[cat.id].map(item => `
+        <div class="plan-item">
+          <span class="box" aria-hidden="true"></span>
+          <span class="t">${esc(item.text)}</span>
+          <button type="button" class="remove" data-cat="${cat.id}" data-text="${esc(item.text)}" aria-label="빼기">✕</button>
+        </div>`).join('')}
+    </div>`).join('');
+
+  body.querySelectorAll('.remove').forEach(el => {
+    el.addEventListener('click', () => {
+      toggleItem(el.dataset.cat, el.dataset.text);
+      renderPlan(); renderCards();
+      if(activeId === el.dataset.cat) renderDetail(CATEGORIES.find(c => c.id === activeId));
+    });
+  });
+}
+
+
+function renderPrintDoc(){
+  const doc = document.getElementById('printDoc');
+  const cats = CATEGORIES.filter(c => state[c.id] && state[c.id].length);
+  const date = document.getElementById('rxDate').textContent;
+  const secs = cats.length ? cats.map(cat => `
+    <section class="pd-sec">
+      <div class="pd-sec-h"><span class="pd-no">${rxNo(cat)}</span><span class="pd-dx">진단</span><span class="pd-name">${esc(cat.name)}</span></div>
+      <div class="pd-rx"><b>처방</b>${esc(cat.summary)}</div>
+      <table class="pd-items">${state[cat.id].map(it => `
+        <tr><td class="bx">☐</td><td>${esc(it.text)}</td><td class="due">목표 날짜<span></span></td></tr>`).join('')}
+      </table>
+    </section>`).join('')
+    : `<div class="pd-empty">아직 담은 처방이 없어요. 화면에서 고민을 골라 실천 항목을 담아 주세요.</div>`;
+  const total = cats.reduce((n, c) => n + state[c.id].length, 0);
+  doc.classList.toggle('compact', total > 8);
+  const allItems = cats.flatMap(c => state[c.id].map(i => i.text)).slice(0, 5);
+  const weekRows = (total > 8 ? [0,1,2] : [0,1,2,3,4]).map(i => `<tr><td>${allItems[i] ? esc(allItems[i]) : ''}</td>${'<td class="c"></td>'.repeat(7)}</tr>`).join('');
+  doc.innerHTML = `
+    <div class="pd-top">
+      <div>
+        <div class="pd-kicker"><span class="x"></span>한나쌤 취업상담실</div>
+        <h1 class="pd-title">나의 취업 고민 처방전</h1>
+      </div>
+      <dl class="pd-meta"><dt>이름</dt><dd></dd><dt>발행일</dt><dd>${date}</dd></dl>
+    </div>
+    <p class="pd-intro">고른 고민(진단)마다 처방과 실천 항목을 정리했어요. 항목마다 목표 날짜를 적고, 끝내면 ☐에 체크해 보세요.</p>
+    ${secs}
+    <div class="pd-box pd-week-box">
+      <h4>이번 주 복용 계획 <small>실천한 날은 ☐에 체크해요</small></h4>
+      <table class="pd-week"><thead><tr><th>실천 항목</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th><th>일</th></tr></thead>
+      <tbody>${weekRows}</tbody></table>
+    </div>
+    <div class="pd-bottom">
+      <div class="pd-box">
+        <div class="pd-line">다음 점검일<span></span></div>
+        <div class="pd-sub">이번 주 나의 다짐</div>
+        <div class="pd-memo"></div>
+      </div>
+      <div class="pd-box">
+        <h4>메모 <small>느낀 점, 막힌 점, 상담 때 묻고 싶은 것</small></h4>
+        <div class="pd-memo"></div>
+      </div>
+    </div>
+    <div class="pd-end">
+      <span>© 다채로운 직업상담사 한나쌤 · 개인 학습용 · 무단 재배포 및 상업적 이용 금지 · colorfulcareercounselor.tistory.com</span>
+      <div class="pd-stamp"><small>처방</small><b>한나쌤</b></div>
+    </div>`;
+}
+window.addEventListener('beforeprint', renderPrintDoc);
+
+(function setDate(){
+  const d = new Date();
+  document.getElementById('rxDate').textContent =
+    `${d.getFullYear()}. ${String(d.getMonth()+1).padStart(2,'0')}. ${String(d.getDate()).padStart(2,'0')}.`;
+})();
+
+document.getElementById('printBtn').addEventListener('click', () => window.print());
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if(confirm('처방전에 담은 항목을 모두 지울까요?')){
+    Object.keys(state).forEach(k => delete state[k]);
+    activeId = null;
+    const detail = document.getElementById('detail');
+    detail.classList.remove('show');
+    detail.innerHTML = '';
+    renderCards(); renderPlan();
+  }
+});
+
+renderCards();
+renderPlan();
+</script>
+</body>
+</html>
